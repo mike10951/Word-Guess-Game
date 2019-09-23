@@ -10,20 +10,53 @@ initializeGame();
 var userText = document.getElementById("user-text");
 var lettersGuessed = [];
 var currentLetter = "";
+var x = "";
+var wins = 0;
 
 
 
 
 document.onkeydown = function(event){
     currentLetter = event.key;
-    
-    if(colors[randomizer].includes(event.key)) {
-        alert("The word has an the key pressed");
+
+    for(i = 0; i < letters.length; i++){
+        if(currentLetter === letters[i]){
+            if(colors[randomizer].includes(event.key)) {
+                alert("The word has the key pressed");
+            }
+                //Write the letter in the array
+            else if(lettersGuessed.indexOf(currentLetter) === -1) {
+                guessesRemaining--;
+                if(guessesRemaining <= 0){
+                    alert("Game over");
+                    document.getElementById("guesses-remaining").innerHTML = guessesRemaining;
+                    resetGame();
+                    initializeGame();
+                }
+                else{
+                    document.getElementById("guesses-remaining").innerHTML = guessesRemaining;
+                    lettersGuessed.push(event.key); 
+                }    
+            }        
+        }
+        else {
+            continue;
+        }
     }
-    else{
-        guessesRemaining--;
-        document.getElementById("guesses-remaining").innerHTML = guessesRemaining;
-        lettersGuessed.push(event.key);
+    for(i = 0; i < colors[randomizer].length; i++) {
+        if(currentLetter === colors[randomizer][i]) {
+            blanks[i] = currentLetter;
+            document.querySelector("#blanks").innerHTML = blanks.join(" ");
+            x = blanks.join("");
+        }
+    }
+
+    if(colors[randomizer] === x){
+        alert("You win");
+        wins++;
+        document.querySelector("#wins").innerHTML = wins;
+        resetGame();
+        initializeGame();
     }
     userText.textContent = lettersGuessed.join(" ");
 }
@@ -39,6 +72,16 @@ function initializeGame() {
         blanks.push("_");
     }
     document.querySelector("#blanks").innerHTML = blanks.join(" ");
+}
+
+function resetGame() {
+    colors = [];
+    randomizer = 0;
+    blanks = [];
+    guessesRemaining = 10;
+    document.getElementById("guesses-remaining").innerHTML = guessesRemaining;
+    currentLetter = "";
+    lettersGuessed = [];
 }
 
 
