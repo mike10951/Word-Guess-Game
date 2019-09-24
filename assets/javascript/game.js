@@ -43,20 +43,17 @@ document.onkeydown = function(event){
             continue;
         }
     }
-    for(i = 0; i < colors[randomizer].length; i++) {
-        if(currentLetter === colors[randomizer][i]) {
-            blanks[i] = currentLetter;
-            document.querySelector("#blanks").innerHTML = blanks.join(" ");
-            x = blanks.join("");
-        }
-    }
+
+    writeWord();
 
     if(colors[randomizer] === x){
         alert("You win");
         wins++;
         document.querySelector("#wins").innerHTML = wins;
-        resetGame();
-        initializeGame();
+        sleep(1500).then(() => {
+            resetGame();
+            initializeGame();
+        })
     }
     userText.textContent = lettersGuessed.join(" ");
 }
@@ -65,7 +62,7 @@ function initializeGame() {
     //Declares the array of words from which the user will have to guess a word.
     colors = ["red", "orange", "green", "blue", "violet"];
     //Generates a random number. This number will be utilized as an index for the words array.
-    randomizer = Math.floor((Math.random() * 5));
+    randomizer = Math.floor((Math.random() * colors.length));
     //Writes the number of letters of the random word in the HTML file with blanks.
     blanks = [];
     for(i = 0; i < colors[randomizer].length; i++) {
@@ -84,6 +81,19 @@ function resetGame() {
     lettersGuessed = [];
 }
 
+function writeWord() {
+    for(i = 0; i < colors[randomizer].length; i++) {
+        if(currentLetter === colors[randomizer][i]) {
+            blanks[i] = currentLetter;
+            document.querySelector("#blanks").innerHTML = blanks.join(" ");
+            x = blanks.join("");
+        }
+    }
+}
+
+const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+  }
 
 
 

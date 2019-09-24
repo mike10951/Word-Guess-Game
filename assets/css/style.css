@@ -1,0 +1,18 @@
+body {
+    text-align: center;
+    line-height: 3rem;
+    font-family: 'Roboto Mono', monospace;
+    color: #FFD23F;
+    background-color: #29335C;
+}
+
+.jumbotron {
+    background-color: #DB2B39;
+}
+
+#blanks {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
